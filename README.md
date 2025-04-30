@@ -2,9 +2,6 @@
   <h1>🔐 미림마이스터고 OAuth Backend</h1>
   <p>미림마이스터고 학생들을 위한 OAuth 인증 서비스의 플러터 라이브러리 레포지토리입니다</p>
   <p>
-    <a href="https://oauth.mmhs.kr/api">
-      <img src="https://img.shields.io/badge/API-oauth.mmhs.kr%2Fapi-5E81F4?style=flat-square" alt="API" />
-    </a>
     <a href="https://github.com/3x-haust/React.js_MmhsOAuth_Client">
       <img src="https://img.shields.io/badge/GitHub-Frontend-FF6B6B?style=flat-square&logo=github" alt="GitHub Frontend" />
     </a>
