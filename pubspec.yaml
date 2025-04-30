@@ -1,0 +1,23 @@
+name: mirim_oauth_flutter
+description: Flutter library for Mirim OAuth authentication
+version: 0.1.0
+homepage: https://github.com/yourusername/mirim_oauth_flutter
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: ">=3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  http: ^1.1.0
+  flutter_secure_storage: ^8.0.0
+  flutter_web_auth_2: ^2.1.4
+  url_launcher: ^6.1.12
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
