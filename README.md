@@ -1,39 +1,38 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+<div align="center">
+  <h1>🔐 미림마이스터고 OAuth Backend</h1>
+  <p>미림마이스터고 학생들을 위한 OAuth 인증 서비스의 플러터 라이브러리 레포지토리입니다</p>
+  <p>
+    <a href="https://oauth.mmhs.kr/api">
+      <img src="https://img.shields.io/badge/API-oauth.mmhs.kr%2Fapi-5E81F4?style=flat-square" alt="API" />
+    </a>
+    <a href="https://github.com/3x-haust/React.js_MmhsOAuth_Client">
+      <img src="https://img.shields.io/badge/GitHub-Frontend-FF6B6B?style=flat-square&logo=github" alt="GitHub Frontend" />
+    </a>
+    <a href="https://github.com/3x-haust/Nest.js_MmhsOAuth_Server">
+      <img src="https://img.shields.io/badge/GitHub-Backend-6BCB77?style=flat-square&logo=github" alt="GitHub Backend" />
+    </a>
+    <a href="https://github.com/3x-haust/Nest.js_MmhsOAuth_Example">
+      <img src="https://img.shields.io/badge/GitHub-Example-FFB833?style=flat-square&logo=github" alt="GitHub Example" />
+    </a>
+    <a href="https://github.com/3x-haust/Flutter_MmhsOAuth_Library">
+      <img src="https://img.shields.io/badge/GitHub-Library-4B32C3?style=flat-square&logo=github" alt="GitHub Library" />
+    </a>
+    <img src="https://img.shields.io/badge/Flutter-000000?style=flat-square&logo=flutter" alt="Flutter" />
+  </p>
+</div>
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
+## 📝 프로젝트 소개
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
+미림마이스터고 OAuth Flutter는 교내 앱 개발자들이 간편하게 미림마이스터고 인증 시스템을 연동할 수 있도록 제공되는 Flutter 패키지입니다. OAuth 2.0 프로토콜을 기반으로 안전하고 편리한 인증 기능을 구현할 수 있습니다.
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+## 🛠️ 기술 스택
 
-## Features
+- **프레임워크**: Flutter
+- **언어**: Dart
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+## 🔗 링크 & 소셜
 
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
-```dart
-const like = 'sample';
-```
-
-## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+- [프로젝트 웹사이트](https://auth.mmhs.app)
+- [개발 블로그](https://velog.io/@kaje033/Project-Mirim-OAuth%EA%B0%80-%EB%AD%94%EB%8D%B0-0-%EA%B0%9C%EC%9A%94)
+- [Hyphen team](https://github.com/HyphenDev)
+- [Instagram](https://www.instagram.com/hyphen_team)
