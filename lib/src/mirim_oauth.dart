@@ -34,30 +34,48 @@ class MirimOAuth extends ChangeNotifier {
   }) : _secureStorage = const FlutterSecureStorage();
 
   MirimUser? get currentUser => _currentUser;
+  bool get isLoggedIn => _currentUser != null && _tokens != null && !(_tokens!.isExpired);
   bool get isLoading => _isLoading;
   String? get accessToken => _tokens?.accessToken;
   String? get refreshToken => _tokens?.refreshToken;
-
-  Future<void> logout() async {
+  
+  Future<MirimUser> logIn() async {
     try {
-      _isLoading = true;
-      notifyListeners();
+      _setLoading(true);
+      
+      final tokens = await _authenticate();
+      final user = await _fetchUserInfo(tokens.accessToken);
+      
+      _tokens = tokens;
+      _currentUser = user;
+      
+      _setLoading(false);
+      return user;
+    } catch (e) {
+      _setLoading(false);
+      rethrow;
+    }
+  }
+
+  Future<void> logOut() async {
+    try {
+      _setLoading(true);
       
       await _secureStorage.delete(key: _tokenKey);
       await _secureStorage.delete(key: _userKey);
       _currentUser = null;
       _tokens = null;
       
-      _isLoading = false;
-      notifyListeners();
+      _setLoading(false);
     } catch (e) {
-      _isLoading = false;
-      notifyListeners();
+      _setLoading(false);
       rethrow;
     }
   }
 
-  Future<bool> isLoggedIn() async {
+  Future<bool> checkIsLoggedIn() async {
+    if (isLoggedIn) return true;
+    
     final tokenJson = await _secureStorage.read(key: _tokenKey);
     if (tokenJson == null) {
       return false;
@@ -68,42 +86,149 @@ class MirimOAuth extends ChangeNotifier {
       if (tokens.isExpired) {
         try {
           _tokens = await _refreshTokens(tokens.refreshToken);
-          _currentUser = await getUser();
+          _currentUser = await _getStoredUser();
           notifyListeners();
           return true;
         } catch (_) {
-          await logout();
+          await logOut();
           return false;
         }
       }
       _tokens = tokens;
-      _currentUser = await getUser();
+      _currentUser = await _getStoredUser();
       notifyListeners();
       return true;
     } catch (_) {
-      await logout();
+      await logOut();
       return false;
     }
   }
 
-  Future<AuthTokens?> getTokens() async {
-    final tokenJson = await _secureStorage.read(key: _tokenKey);
-    if (tokenJson == null) {
-      return null;
-    }
-
+  Future<MirimUser> refreshUserInfo() async {
     try {
-      final tokens = AuthTokens.fromJson(json.decode(tokenJson));
-      if (tokens.isExpired) {
-        return await _refreshTokens(tokens.refreshToken);
-      }
-      return tokens;
+      _setLoading(true);
+      
+      final tokens = await _getValidTokens();
+      final user = await _fetchUserInfo(tokens.accessToken);
+      _currentUser = user;
+      
+      _setLoading(false);
+      return user;
     } catch (e) {
-      throw MirimOAuthException('Failed to get tokens: ${e.toString()}');
+      _setLoading(false);
+      rethrow;
     }
   }
 
-  Future<MirimUser?> getUser() async {
+  Future<AuthTokens> refreshTokens() async {
+    if (_tokens == null) {
+      throw MirimOAuthException('Not logged in');
+    }
+    
+    try {
+      _setLoading(true);
+      final tokens = await _refreshTokens(_tokens!.refreshToken);
+      _tokens = tokens;
+      _setLoading(false);
+      return tokens;
+    } catch (e) {
+      _setLoading(false);
+      rethrow;
+    }
+  }
+
+  Future<Map<String, dynamic>> makeAuthenticatedRequest(
+    String endpoint, 
+    {
+      String method = 'GET',
+      Map<String, dynamic>? body,
+      Map<String, String>? additionalHeaders
+    }
+  ) async {
+    try {
+      final tokens = await _getValidTokens();
+      
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${tokens.accessToken}',
+        if (additionalHeaders != null) ...additionalHeaders,
+      };
+
+      http.Response response;
+      final uri = Uri.parse('$oauthServerUrl$endpoint');
+      
+      switch (method.toUpperCase()) {
+        case 'GET':
+          response = await http.get(uri, headers: headers);
+          break;
+        case 'POST':
+          response = await http.post(
+            uri, 
+            headers: headers,
+            body: body != null ? json.encode(body) : null
+          );
+          break;
+        case 'PUT':
+          response = await http.put(
+            uri, 
+            headers: headers,
+            body: body != null ? json.encode(body) : null
+          );
+          break;
+        case 'DELETE':
+          response = await http.delete(
+            uri, 
+            headers: headers,
+            body: body != null ? json.encode(body) : null
+          );
+          break;
+        default:
+          throw MirimOAuthException('Unsupported HTTP method: $method');
+      }
+
+      if (response.statusCode != 200) {
+        throw MirimOAuthException(
+          'Request failed',
+          errorCode: response.statusCode,
+          data: response.body,
+        );
+      }
+
+      return json.decode(response.body);
+    } catch (e) {
+      if (e is MirimOAuthException) rethrow;
+      throw MirimOAuthException('Request failed: ${e.toString()}');
+    }
+  }
+    
+  void _setLoading(bool loading) {
+    _isLoading = loading;
+    notifyListeners();
+  }
+  
+  Future<AuthTokens> _getValidTokens() async {
+    if (_tokens == null || _tokens!.isExpired) {
+      final storedTokenJson = await _secureStorage.read(key: _tokenKey);
+      if (storedTokenJson == null) {
+        throw MirimOAuthException('Not logged in');
+      }
+      
+      try {
+        final storedTokens = AuthTokens.fromJson(json.decode(storedTokenJson));
+        if (storedTokens.isExpired) {
+          return await _refreshTokens(storedTokens.refreshToken);
+        }
+        _tokens = storedTokens;
+        return storedTokens;
+      } catch (e) {
+        throw MirimOAuthException('Failed to get valid tokens: ${e.toString()}');
+      }
+    }
+    
+    return _tokens!;
+  }
+
+  Future<MirimUser?> _getStoredUser() async {
     final userJson = await _secureStorage.read(key: _userKey);
     if (userJson == null) {
       return null;
@@ -112,29 +237,7 @@ class MirimOAuth extends ChangeNotifier {
     try {
       return MirimUser.fromJson(json.decode(userJson));
     } catch (e) {
-      throw MirimOAuthException('Failed to get user: ${e.toString()}');
-    }
-  }
-
-  Future<MirimUser> logIn() async {
-    try {
-      _isLoading = true;
-      notifyListeners();
-      
-      final tokens = await _authenticate();
-      final user = await _fetchUserInfo(tokens.accessToken);
-      
-      _tokens = tokens;
-      _currentUser = user;
-      
-      _isLoading = false;
-      notifyListeners();
-      
-      return user;
-    } catch (e) {
-      _isLoading = false;
-      notifyListeners();
-      rethrow;
+      throw MirimOAuthException('Failed to get user data: ${e.toString()}');
     }
   }
 
@@ -323,32 +426,6 @@ class MirimOAuth extends ChangeNotifier {
     } catch (e) {
       if (e is MirimOAuthException) rethrow;
       throw MirimOAuthException('Failed to fetch user info: ${e.toString()}');
-    }
-  }
-
-  Future<MirimUser> getCurrentUserInfo() async {
-    try {
-      _isLoading = true;
-      notifyListeners();
-      
-      final tokens = await getTokens();
-      if (tokens == null) {
-        _isLoading = false;
-        notifyListeners();
-        throw MirimOAuthException('Not signed in');
-      }
-      
-      final user = await _fetchUserInfo(tokens.accessToken);
-      _currentUser = user;
-      
-      _isLoading = false;
-      notifyListeners();
-      
-      return user;
-    } catch (e) {
-      _isLoading = false;
-      notifyListeners();
-      rethrow;
     }
   }
 }
