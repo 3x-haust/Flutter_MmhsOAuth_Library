@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>🔐 미림마이스터고 OAuth Backend</h1>
+  <h1>🔐 미림마이스터고 OAuth 플러터 라이브러리</h1>
   <p>미림마이스터고 학생들을 위한 OAuth 인증 서비스의 플러터 라이브러리 레포지토리입니다</p>
   <p>
     <a href="https://github.com/3x-haust/React.js_MmhsOAuth_Client">
