@@ -1,10 +1,16 @@
 # This is a generated file; do not edit or check into version control.
-flutter_secure_storage=/Users/lyu/.pub-cache/hosted/pub.dev/flutter_secure_storage-8.1.0/
+desktop_webview_window=/Users/lyu/.pub-cache/hosted/pub.dev/desktop_webview_window-0.2.3/
+flutter_secure_storage=/Users/lyu/.pub-cache/hosted/pub.dev/flutter_secure_storage-9.2.4/
 flutter_secure_storage_linux=/Users/lyu/.pub-cache/hosted/pub.dev/flutter_secure_storage_linux-1.2.3/
 flutter_secure_storage_macos=/Users/lyu/.pub-cache/hosted/pub.dev/flutter_secure_storage_macos-3.1.3/
 flutter_secure_storage_web=/Users/lyu/.pub-cache/hosted/pub.dev/flutter_secure_storage_web-1.2.1/
-flutter_secure_storage_windows=/Users/lyu/.pub-cache/hosted/pub.dev/flutter_secure_storage_windows-2.1.1/
-flutter_web_auth_2=/Users/lyu/.pub-cache/hosted/pub.dev/flutter_web_auth_2-2.2.1/
+flutter_secure_storage_windows=/Users/lyu/.pub-cache/hosted/pub.dev/flutter_secure_storage_windows-3.1.2/
+flutter_web_auth_2=/Users/lyu/.pub-cache/hosted/pub.dev/flutter_web_auth_2-4.1.0/
+path_provider=/Users/lyu/.pub-cache/hosted/pub.dev/path_provider-2.1.5/
+path_provider_android=/Users/lyu/.pub-cache/hosted/pub.dev/path_provider_android-2.2.15/
+path_provider_foundation=/Users/lyu/.pub-cache/hosted/pub.dev/path_provider_foundation-2.4.1/
+path_provider_linux=/Users/lyu/.pub-cache/hosted/pub.dev/path_provider_linux-2.2.1/
+path_provider_windows=/Users/lyu/.pub-cache/hosted/pub.dev/path_provider_windows-2.3.0/
 url_launcher=/Users/lyu/.pub-cache/hosted/pub.dev/url_launcher-6.3.1/
 url_launcher_android=/Users/lyu/.pub-cache/hosted/pub.dev/url_launcher_android-6.3.14/
 url_launcher_ios=/Users/lyu/.pub-cache/hosted/pub.dev/url_launcher_ios-6.3.3/
