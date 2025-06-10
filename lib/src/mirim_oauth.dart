@@ -38,6 +38,11 @@ class MirimOAuth extends ChangeNotifier {
   bool get isLoading => _isLoading;
   String? get accessToken => _tokens?.accessToken;
   String? get refreshToken => _tokens?.refreshToken;
+
+  Future<String> getAccessToken() async {
+    final tokens = await _getValidTokens();
+    return tokens.accessToken;
+  }
   
   Future<MirimUser> logIn() async {
     try {
