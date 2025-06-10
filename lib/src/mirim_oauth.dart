@@ -103,7 +103,7 @@ class MirimOAuth extends ChangeNotifier {
       _currentUser = await _getStoredUser();
       notifyListeners();
       return true;
-    } catch (_) {
+    } catch (e) {
       await logOut();
       return false;
     }
@@ -331,7 +331,10 @@ class MirimOAuth extends ChangeNotifier {
       final tokens = AuthTokens(
         accessToken: tokenData['access_token'],
         refreshToken: tokenData['refresh_token'],
-        expiresIn: tokenData['expires_in'] ?? 3600,
+        expiresIn: tokenData['expires_in'] ?? 900,
+        issuedAt: tokenData['issued_at'] != null
+            ? DateTime.parse(tokenData['issued_at'])
+            : DateTime.now(),
       );
 
       await _secureStorage.write(
@@ -377,7 +380,8 @@ class MirimOAuth extends ChangeNotifier {
       final tokens = AuthTokens(
         accessToken: tokenData['accessToken'],
         refreshToken: refreshToken,
-        expiresIn: tokenData['expiresIn'] ?? 3600,
+        expiresIn: 900,
+        issuedAt: DateTime.now(),
       );
 
       await _secureStorage.write(

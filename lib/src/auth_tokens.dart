@@ -8,8 +8,8 @@ class AuthTokens {
     required this.accessToken,
     required this.refreshToken,
     required this.expiresIn,
-    DateTime? issuedAt,
-  }) : issuedAt = issuedAt ?? DateTime.now();
+    required this.issuedAt,
+  });
 
   bool get isExpired {
     final expirationDate = issuedAt.add(Duration(seconds: expiresIn));
