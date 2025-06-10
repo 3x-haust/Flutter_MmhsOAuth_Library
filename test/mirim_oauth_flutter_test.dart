@@ -20,6 +20,7 @@ void main() {
       accessToken: 'access_token_value',
       refreshToken: 'refresh_token_value',
       expiresIn: 3600,
+      issuedAt: DateTime.now(),
     );
     
     expect(tokens.isExpired, equals(false));
