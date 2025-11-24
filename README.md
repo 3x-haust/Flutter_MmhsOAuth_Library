@@ -27,6 +27,3 @@
 ## 🔗 링크 & 소셜
 
 - [프로젝트 웹사이트](https://auth.mmhs.app)
-- [개발 블로그](https://velog.io/@kaje033/Project-Mirim-OAuth%EA%B0%80-%EB%AD%94%EB%8D%B0-0-%EA%B0%9C%EC%9A%94)
-- [Hyphen team](https://github.com/HyphenDev)
-- [Instagram](https://www.instagram.com/hyphen_team)
