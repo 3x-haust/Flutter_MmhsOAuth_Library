@@ -329,9 +329,9 @@ class MirimOAuth extends ChangeNotifier {
 
       final tokenData = data['data'];
       final tokens = AuthTokens(
-        accessToken: tokenData['access_token'],
-        refreshToken: tokenData['refresh_token'],
-        expiresIn: tokenData['expires_in'] ?? 900,
+        accessToken: tokenData['access_token'] ?? tokenData['accessToken'],
+        refreshToken: tokenData['refresh_token'] ?? tokenData['refreshToken'],
+        expiresIn: tokenData['expires_in'] ?? tokenData['expires_in_accessToken'] ?? 900,
         issuedAt: tokenData['issued_at'] != null
             ? DateTime.parse(tokenData['issued_at'])
             : DateTime.now(),
@@ -378,9 +378,9 @@ class MirimOAuth extends ChangeNotifier {
 
       final tokenData = data['data'];
       final tokens = AuthTokens(
-        accessToken: tokenData['accessToken'],
-        refreshToken: refreshToken,
-        expiresIn: 900,
+        accessToken: tokenData['access_token'] ?? tokenData['accessToken'],
+        refreshToken: tokenData['refresh_token'] ?? tokenData['refreshToken'] ?? refreshToken,
+        expiresIn: tokenData['expires_in'] ?? tokenData['expires_in_accessToken'] ?? 900,
         issuedAt: DateTime.now(),
       );
 

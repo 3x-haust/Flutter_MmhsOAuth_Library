@@ -7,6 +7,8 @@ class MirimUser {
   final String? admission;
   final String? role;
   final int? generation;
+  final int? grade;
+  final int? graduationYear;
 
   MirimUser({
     required this.id,
@@ -17,6 +19,8 @@ class MirimUser {
     this.admission,
     this.role,
     this.generation,
+    this.grade,
+    this.graduationYear,
   });
 
   factory MirimUser.fromJson(Map<String, dynamic> json) {
@@ -29,6 +33,9 @@ class MirimUser {
       admission: json['admission']?.toString(),
       role: json['role']?.toString(),
       generation: json['generation'] is int ? json['generation'] : null,
+      grade: json['grade'] is int ? json['grade'] : null,
+      graduationYear:
+          json['graduationYear'] is int ? json['graduationYear'] : null,
     );
   }
 
@@ -41,5 +48,7 @@ class MirimUser {
         'admission': admission,
         'role': role,
         'generation': generation,
+        'grade': grade,
+        'graduationYear': graduationYear,
       };
 }
