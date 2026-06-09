@@ -1,3 +1,7 @@
+## 1.0.8
+
+- Add profileImageUrl to MirimUser.
+
 ## 1.0.7
 
 - Add grade and graduationYear fields to MirimUser.
